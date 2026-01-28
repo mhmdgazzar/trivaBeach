@@ -1,0 +1,92 @@
+---
+interface Hotel {
+    name: string;
+    rating: string;
+    stars: number;
+    pricePerNight: string;
+    url?: string;
+}
+
+interface Props {
+    name: string;
+    distance: number;
+    waterTemp: number;
+    hotels: Hotel[];
+}
+
+const { name, distance, waterTemp, hotels } = Astro.props;
+---
+
+<div
+    class="card bg-base-200 border border-base-300 overflow-hidden transition-all hover:border-primary/50"
+>
+    <div class="card-body p-4">
+        <div class="flex items-start justify-between">
+            <div>
+                <h3 class="card-title text-lg">
+                    <i class="ph-duotone ph-umbrella-simple text-primary"></i>
+                    {name}
+                </h3>
+                <p class="text-sm text-base-content/70">
+                    {distance.toFixed(1)} km away
+                </p>
+            </div>
+            <div class="badge badge-primary badge-lg gap-1">
+                <i class="ph-duotone ph-thermometer-hot"></i>
+                {waterTemp}°C
+            </div>
+        </div>
+
+        <div class="divider my-2"></div>
+
+        <h4 class="font-semibold flex items-center gap-2 mb-2">
+            <i class="ph-duotone ph-bed text-secondary"></i>
+            Nearby Hotels
+        </h4>
+
+        {
+            hotels.length > 0 ? (
+                hotels.map((hotel) => (
+                    <div class="bg-base-100 rounded-lg p-3 mb-2 last:mb-0">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-medium">{hotel.name}</p>
+                                <div class="flex items-center gap-2 text-sm text-base-content/70">
+                                    <span class="flex items-center gap-1">
+                                        <i class="ph-fill ph-star text-accent" />
+                                        {hotel.rating || "N/A"}
+                                    </span>
+                                    <span>•</span>
+                                    <span>{hotel.stars || "?"}★ Hotel</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-lg font-bold text-primary">
+                                    {hotel.pricePerNight}
+                                </p>
+                                <p class="text-xs text-base-content/60">
+                                    /night
+                                </p>
+                            </div>
+                        </div>
+                        {hotel.url && (
+                            <a
+                                href={hotel.url}
+                                target="_blank"
+                                class="btn btn-sm btn-outline btn-primary mt-2 gap-1"
+                            >
+                                <i class="ph-duotone ph-arrow-square-out" />
+                                View on Trivago
+                            </a>
+                        )}
+                    </div>
+                ))
+            ) : (
+                <div class="text-center py-4 text-base-content/60">
+                    <i class="ph-duotone ph-magnifying-glass text-2xl mb-2" />
+                    <p>No hotels found nearby</p>
+                </div>
+            )
+        }
+    </div>
+</div>

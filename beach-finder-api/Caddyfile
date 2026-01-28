@@ -1,0 +1,3 @@
+api.trivabeach.gazzar.de {
+    reverse_proxy localhost:3000
+}
