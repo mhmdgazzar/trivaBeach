@@ -1,3 +1,11 @@
+# Sensitive files - NEVER COMMIT
+oracle-amd-2.md
+*.pem
+*.key
+*_ssh_key*
+secrets/
+credentials/
+
 # Dependencies
 node_modules/
 
